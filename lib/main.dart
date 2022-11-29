@@ -16,8 +16,14 @@ class PerguntaApp extends StatelessWidget {
             title: Text('Perguntas'),
           ),
           body: Column(
-            children: [
+            children: <Widget>[
               Text(perguntas.elementAt(0)),
+              ElevatedButton(
+                child: Text('Resposta 1'),
+                onPressed: null,
+              ),
+              ElevatedButton(child: Text('Resposta 2'), onPressed: null),
+              ElevatedButton(child: Text('Resposta 3'), onPressed: null),
             ],
           )),
     );
