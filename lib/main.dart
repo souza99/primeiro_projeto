@@ -2,56 +2,121 @@ import 'package:flutter/material.dart';
 
 main() => runApp(new PerguntaApp());
 
-class PerguntaApp extends StatelessWidget {
-  void responder() {
-    print("Pergunta respondida");
-  }
+class PerguntaAppState extends State<PerguntaApp> {
+  var perguntaSelecionada = 0;
 
+  void responder() {
+    setState(() {
+      perguntaSelecionada++;
+    });
+    print(perguntaSelecionada);
+  }
   // void Function() funcaoQueRetornaUmaFuncao() {
   //   return () {
   //     print('Pergunta Respondida #02');
   //   };
   // }
 
-  final List<String> perguntas = [
-    'Qual a sua cor favorita ?',
-    'Qual é o seu animal favorito ?',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<String> perguntas = [
+      'Qual a sua cor favorita ?',
+      'Qual é o seu animal favorito ?',
+    ];
+
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text('Perguntas'),
+            title: Text(perguntas[perguntaSelecionada]),
           ),
           body: Column(
             children: <Widget>[
-              Text(perguntas.elementAt(0)),
-              ElevatedButton(
-                child: Text('Resposta 1'),
-                onPressed: responder,
-              ),
+              // Text(perguntas.elementAt(0)),
+              // ElevatedButton(
+              //   child: Text('Resposta 1'),
+              //   onPressed: responder,
+              // ),
               // Utilizando uma funcao que retorna outra função
               // ElevatedButton(
               //   child: Text('Resposta 2'),
               //   onPressed: funcaoQueRetornaUmaFuncao(),
               // ),
+              // ElevatedButton(
+              //   child: Text('Resposta 2'),
+              //   onPressed: () {
+              //     print("Resposta 2 foi selecionada! ");
+              //   },
+              // ),
+              // ElevatedButton(
+              //     child: Text('Resposta 3'),
+              //     onPressed: () => print("Resposta 3!!!")),
 
+              Text(perguntas[perguntaSelecionada]),
               ElevatedButton(
-                child: Text('Resposta 2'),
-                onPressed: () {
-                  print("Resposta 2 foi selecionada! ");
-                },
+                child: Text('Resposta 1'),
+                onPressed: responder,
               ),
               ElevatedButton(
-                  child: Text('Resposta 3'),
-                  onPressed: () => print("Resposta 3!!!")),
+                onPressed: responder,
+                child: Text('Resposta 2'),
+              ),
+              ElevatedButton(
+                onPressed: responder,
+                child: Text('Resposta 3'),
+              ),
             ],
           )),
     );
   }
 }
+
+class PerguntaApp extends StatefulWidget {
+  PerguntaAppState createState() {
+    return PerguntaAppState();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // MaterialApp é o nó rais da aplicação
 
