@@ -18,7 +18,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
     final List<Map<String, Object>> perguntas = [
       {
         'texto': "Qual a sua cor favorita ?",
-        'respostas': ["Preto", "Azul", "Amarelo", "Verde"],
+        'respostas': ["Preto", "Azul", "Amarelo", "Verde", "Laranja"],
       },
       {
         'texto': "Qual é o seu animal favorito ?",
@@ -30,8 +30,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
       }
     ];
 
+    //Cria uma lista com os meus botões para usar depois
+    List<Widget> respostas = [];
+
     for (var textoResp in perguntas[_perguntaSelecionada].cast()['respostas']) {
-      print(textoResp);
+      //Adiciona botões a lista de respostas
+      respostas.add(Resposta(textoResp, _responder));
     }
 
     return MaterialApp(
@@ -44,9 +48,10 @@ class _PerguntaAppState extends State<PerguntaApp> {
           body: Column(
             children: <Widget>[
               Questao(perguntas[_perguntaSelecionada]['texto'].toString()),
-              Resposta('Resposta 1', _responder),
-              Resposta('Resposta 2', _responder),
-              Resposta('Resposta 3', _responder),
+              //"..." é um Operador spred
+              // Vai trazer todos os items da lista
+              // para adicionar na lista "children: <Widget>["
+              ...respostas
             ],
           )),
     );
