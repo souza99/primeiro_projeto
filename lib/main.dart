@@ -30,13 +30,16 @@ class _PerguntaAppState extends State<PerguntaApp> {
       }
     ];
 
+    List<String> respostas =
+        perguntas[_perguntaSelecionada].cast()['respostas'];
     //Cria uma lista com os meus botões para usar depois
-    List<Widget> respostas = [];
+    List<Widget> widgets =
+        respostas.map((texto) => Resposta(texto, _responder)).toList();
 
-    for (var textoResp in perguntas[_perguntaSelecionada].cast()['respostas']) {
-      //Adiciona botões a lista de respostas
-      respostas.add(Resposta(textoResp, _responder));
-    }
+    // for (var textoResp in respostas) {
+    //   //Adiciona botões a lista de respostas
+    //   widgets.add(Resposta(textoResp, _responder));
+    // }
 
     return MaterialApp(
       home: Scaffold(
@@ -51,7 +54,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
               //"..." é um Operador spred
               // Vai trazer todos os items da lista
               // para adicionar na lista "children: <Widget>["
-              ...respostas
+              ...widgets
             ],
           )),
     );
