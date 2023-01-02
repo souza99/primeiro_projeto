@@ -7,31 +7,42 @@ main() => runApp(new PerguntaApp());
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
 
+  final List<Map<String, Object>> _perguntas = const [
+    {
+      'texto': "Qual a sua cor favorita ?",
+      'respostas': ["Preto", "Azul", "Amarelo", "Verde", "Laranja"],
+    },
+    {
+      'texto': "Qual é o seu animal favorito ?",
+      'respostas': ['Jirafa', 'Leão', 'Ipopotamo', 'Pinguim'],
+    },
+    {
+      'texto': "Qual sua seleção favorita ?",
+      'respostas': ['Italia', 'Japão', 'Brasil', 'E.U.A'],
+    }
+  ];
+
   void _responder() {
-    setState(() {
-      _perguntaSelecionada++;
-    });
+    if (temPerguntaSelecionada) {
+      setState(() {
+        _perguntaSelecionada++;
+      });
+    }
+
+    print(
+        '_perguntaSelecionada: ${_perguntaSelecionada} \n tamanho: ${_perguntas.length}');
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> perguntas = [
-      {
-        'texto': "Qual a sua cor favorita ?",
-        'respostas': ["Preto", "Azul", "Amarelo", "Verde", "Laranja"],
-      },
-      {
-        'texto': "Qual é o seu animal favorito ?",
-        'respostas': ['Jirafa', 'Leão', 'Ipopotamo', 'Pinguim'],
-      },
-      {
-        'texto': "Qual sua seleção favorita ?",
-        'respostas': ['Italia', 'Japão', 'Brasil', 'E.U.A'],
-      }
-    ];
+    List<String> respostas = temPerguntaSelecionada
+        ? _perguntas[_perguntaSelecionada].cast()['respostas']
+        : [];
 
-    List<String> respostas =
-        perguntas[_perguntaSelecionada].cast()['respostas'];
     //Cria uma lista com os meus botões para usar depois
     List<Widget> widgets =
         respostas.map((texto) => Resposta(texto, _responder)).toList();
@@ -46,17 +57,20 @@ class _PerguntaAppState extends State<PerguntaApp> {
           appBar: AppBar(
             //Passar o index do ITEM na lista,
             //e passar a chave para pegar o valor que ela contem
-            title: Text(perguntas[_perguntaSelecionada]['texto'].toString()),
+            title: Text("Perguntas"),
           ),
-          body: Column(
-            children: <Widget>[
-              Questao(perguntas[_perguntaSelecionada]['texto'].toString()),
-              //"..." é um Operador spred
-              // Vai trazer todos os items da lista
-              // para adicionar na lista "children: <Widget>["
-              ...widgets
-            ],
-          )),
+          body: temPerguntaSelecionada
+              ? Column(
+                  children: <Widget>[
+                    Questao(
+                        _perguntas[_perguntaSelecionada]['texto'].toString()),
+                    //"..." é um Operador spred
+                    // Vai trazer todos os items da lista
+                    // para adicionar na lista "children: <Widget>["
+                    ...widgets
+                  ],
+                )
+              : null),
     );
   }
 }
